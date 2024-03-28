@@ -1,0 +1,38 @@
+import string
+
+def generate_vigenere_table():
+    """
+    Generates the Vigenère table.
+    """
+    table = {}
+    alphabet = string.ascii_uppercase
+    for i in range(26):
+        shifted_alphabet = alphabet[i:] + alphabet[:i]
+        table[alphabet[i]] = shifted_alphabet
+    return table
+
+def encrypt_vigenere(plaintext, key):
+    """
+    Encrypts plaintext using the Vigenère cipher with the given key.
+    """
+    table = generate_vigenere_table()
+    key = key.upper()
+    key_length = len(key)
+    ciphertext = ''
+
+    for i, char in enumerate(plaintext.upper()):
+        if char.isalpha():
+            shift = key[i % key_length]
+            ciphertext += table[shift][ord(char) - ord('A')]
+        else:
+            ciphertext += char
+    return ciphertext
+
+def main():
+    plaintext = input("Enter the plaintext: ")
+    key = input("Enter the key: ")
+    ciphertext = encrypt_vigenere(plaintext, key)
+    print("Encrypted text:", ciphertext)
+
+if __name__ == "__main__":
+    main()
