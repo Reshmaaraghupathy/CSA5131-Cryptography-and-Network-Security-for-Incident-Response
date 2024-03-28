@@ -1,0 +1,39 @@
+def mod_inverse(a, m):
+    """
+    Finds the modular multiplicative inverse of 'a' modulo 'm'.
+    """
+    for x in range(1, m):
+        if (a * x) % m == 1:
+            return x
+    return None
+
+def encrypt_affine_caesar(plaintext, a, b):
+    """
+    Encrypts plaintext using the affine Caesar cipher with the given key (a, b).
+    """
+    ciphertext = ''
+    for char in plaintext:
+        if char.isalpha():
+            if char.isupper():
+                ciphertext += chr(((a * (ord(char) - ord('A')) + b) % 26) + ord('A'))
+            else:
+                ciphertext += chr(((a * (ord(char) - ord('a')) + b) % 26) + ord('a'))
+        else:
+            ciphertext += char
+    return ciphertext
+
+def main():
+    a = int(input("Enter the value of 'a' (must be coprime with 26): "))
+    b = int(input("Enter the value of 'b': "))
+    plaintext = input("Enter the plaintext: ")
+
+    # Check if 'a' is coprime with 26
+    if mod_inverse(a, 26) is None:
+        print("Error: 'a' must be coprime with 26.")
+        return
+
+    ciphertext = encrypt_affine_caesar(plaintext, a, b)
+    print("Encrypted text:", ciphertext)
+
+if __name__ == "__main__":
+    main()
