@@ -1,0 +1,43 @@
+import string
+
+def generate_keyword_cipher(keyword):
+    """
+    Generates a monoalphabetic cipher sequence using the given keyword.
+    """
+    keyword = keyword.upper()
+    cipher_sequence = ''
+    for char in keyword:
+        if char not in cipher_sequence and char.isalpha():
+            cipher_sequence += char
+    alphabet = string.ascii_uppercase
+    for char in alphabet:
+        if char not in cipher_sequence:
+            cipher_sequence += char
+    return cipher_sequence
+
+def encrypt_monoalphabetic(plaintext, cipher_sequence):
+    """
+    Encrypts the plaintext using the monoalphabetic cipher with the given cipher sequence.
+    """
+    plaintext = plaintext.upper()
+    ciphertext = ''
+    for char in plaintext:
+        if char.isalpha():
+            index = ord(char) - ord('A')
+            ciphertext += cipher_sequence[index]
+        else:
+            ciphertext += char
+    return ciphertext
+
+def main():
+    keyword = input("Enter the keyword: ")
+    plaintext = input("Enter the plaintext: ")
+
+    cipher_sequence = generate_keyword_cipher(keyword)
+    ciphertext = encrypt_monoalphabetic(plaintext, cipher_sequence)
+
+    print("Cipher sequence:", cipher_sequence)
+    print("Encrypted text:", ciphertext)
+
+if __name__ == "__main__":
+    main()
