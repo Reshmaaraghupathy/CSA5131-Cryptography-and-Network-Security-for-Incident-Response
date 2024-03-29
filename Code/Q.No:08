@@ -1,0 +1,51 @@
+def frequency_analysis(ciphertext):
+    """
+    Performs frequency analysis on the ciphertext.
+    """
+    freq = {}
+    for char in ciphertext:
+        if char.isalpha():
+            freq[char] = freq.get(char, 0) + 1
+    
+    sorted_freq = sorted(freq.items(), key=lambda x: x[1], reverse=True)
+    return sorted_freq
+
+def decrypt_simple_substitution(ciphertext, substitutions):
+    """
+    Decrypts the ciphertext using the provided substitutions.
+    """
+    plaintext = ''
+    for char in ciphertext:
+        if char.isalpha():
+            plaintext += substitutions.get(char, char)
+        else:
+            plaintext += char
+    return plaintext
+
+def main():
+    ciphertext = "your ciphertext goes here"  # Update with the actual ciphertext
+    freq_analysis = frequency_analysis(ciphertext)
+
+    # Based on frequency analysis, assume the character corresponding to 'e' is the most frequent
+    e_character = freq_analysis[0][0]
+    substitutions = {e_character: 'e'}
+
+    # Guess the characters for 't' and 'h' based on the assumption that 'the' is the most common word
+    substitutions[freq_analysis[1][0]] = 't'
+    substitutions[freq_analysis[2][0]] = 'h'
+
+    # Decrypt the rest of the message based on deduced words and context
+    # You may need to update this part based on your knowledge of common English words and patterns
+    # For example, 'and', 'to', 'of', 'in', etc.
+    substitutions['y'] = 'a'
+    substitutions['o'] = 'n'
+    substitutions['u'] = 'd'
+    substitutions['r'] = 'i'
+    substitutions['c'] = 's'
+    substitutions['f'] = 'r'
+
+    plaintext = decrypt_simple_substitution(ciphertext, substitutions)
+    print("Decrypted text:", plaintext)
+
+if __name__ == "__main__":
+    main()
